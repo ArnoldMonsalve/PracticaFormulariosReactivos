@@ -4,20 +4,23 @@
 <div class="row">
     <div class="col">
 
-        <form action="" (ngSubmit)="guardar(miFormulario)" #miFormulario="ngForm">
+        <form action="" (ngSubmit)="guardar()" #miFormulario="ngForm" autocomplete="off">
 
             <div class="mb-3 row">
                 <label for="producto" class="col-sm-3 col-form-label">Producto</label>
                 <div class="col-sm-9">
-                    <input type="text" ngModel name="producto" class="form-control" placeholder="Nombre del producto">
-                    <span class="form-text text-danger">Debe ser de 3 letras</span>
+                    <input type="text" [(ngModel)]="inicializarFormulario.producto" name="producto" class="form-control" placeholder="Nombre del producto" required minlength="5">
+                    <!-- validación de error -->
+                    <span *ngIf="VerErrorProducto()" class="form-text text-danger">Debe tener mínimo 5 letras</span>
                 </div>
             </div>
 
             <div class="mb-3 row">
                 <label for="precio" class="col-sm-3 col-form-label">Precio</label>
                 <div class="col-sm-9">
-                    <input type="number" class="form-control" ngModel name="precio" placeholder="Precio del producto" step="2">
+                    <input type="number" class="form-control" [(ngModel)]="inicializarFormulario.precio" name="precio" placeholder="Precio del producto" step="2" min="0">
+                    <span *ngIf="VerErrorPrecio()" class="form-text text-danger">El precio debe ser mayor o igual a 0</span>
+
                     <!-- step,min,max,required son funcionalidades curiosas de los inputs-->
                 </div>
             </div>
@@ -25,13 +28,13 @@
             <div class="mb-3 row">
                 <label for="existencias" class="col-sm-3 col-form-label">Existencias</label>
                 <div class="col-sm-9">
-                    <input type="number" class="form-control" ngModel name="existencias" placeholder="Existencias del producto" required max="5">
+                    <input type="number" class="form-control" [(ngModel)]="inicializarFormulario.existencias" name="existencias" placeholder="Existencias del producto" required max="5" custonMin [minimo]="0">
                 </div>
             </div>
 
             <div class="row">
                 <div class="col ">
-                    <button type="submit" class="btn btn-primary float-end">
+                    <button type="submit" class="btn btn-primary float-end" [disabled]="miFormulario.invalid">
                         Guardar
                     </button>
                 </div>
@@ -56,8 +59,13 @@
         <span>Touched</span>
         <pre>{{miFormulario.touched}}</pre>
 
+        <!-- Visualizar datos formateados como json para que no se vea [object object] con el pipe Json -->
         <span>Value</span>
         <pre>{{miFormulario.value | json}}</pre>
+
+        <span>CustomDirective</span>
+        <pre>{{miFormulario.controls.existencias?.errors | json}}</pre>
+
 
     </div>
 </div>
