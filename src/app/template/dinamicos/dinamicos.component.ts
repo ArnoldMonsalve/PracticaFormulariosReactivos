@@ -1,70 +1,51 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { Component } from '@angular/core';
 
-interface Persona{
-  nombre:string;
-  favoritos:Favoritos[];
+interface Persona {
+  nombre: string;
+  favoritos: Favorito[];
 }
 
-interface Favoritos{
-  id:number;
-  nombre:string;
+interface Favorito {
+  id: number;
+  nombre: string;
 }
+
+
 
 @Component({
   selector: 'app-dinamicos',
   templateUrl: './dinamicos.component.html',
-  styleUrls: ['./dinamicos.component.css']
+  styles: [
+  ]
 })
-export class DinamicosComponent implements OnInit {
+export class DinamicosComponent {
 
-  @ViewChild('miFormulario') miFormulario:NgForm;
+  nuevoJuego: string = '';
 
-  nuevojuego:string='';
-
-  persona:Persona={
-    nombre:'Arnold',
-    favoritos:[
-      {
-        id:1, nombre:"HALO"
-      },
-      {
-        id:2, nombre:'LOL'
-      }
+  persona: Persona = {
+    nombre: 'Fernando',
+    favoritos: [
+      { id: 1, nombre: 'Metal Gear' },
+      { id: 2, nombre: 'Death Stranding' },
     ]
   }
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
-  guardar(){
-    console.log(this.miFormulario);
-  }
-
-  ErrorNombre():boolean{
-    return this.miFormulario?.controls.nombre?.value == '' && this.miFormulario?.controls.nombre?.touched;
-  }
-
-  agregar(){
-
-    if(this.nuevojuego == '' || this.nuevojuego == undefined){
-      alert('Por favor, llenas este campo')
-    }else{
-      const nuevoFavorito : Favoritos={
-        id: this.persona.favoritos.length + 1,
-        nombre: this.nuevojuego
-      };
-
-      this.persona.favoritos.push({...nuevoFavorito});
-      //limpiaremos el input
-      this.nuevojuego='';
-
+  agregarJuego() {
+    const nuevoFavorito: Favorito = {
+      id: this.persona.favoritos.length + 1,
+      nombre: this.nuevoJuego
     }
+
+    this.persona.favoritos.push({ ...nuevoFavorito });
+    this.nuevoJuego = '';
   }
 
-  eliminar(index:number){
-    this.persona.favoritos.splice(index,1)
+  eliminar( index: number ) {
+    this.persona.favoritos.splice(index, 1);
+  }
+
+
+  guardar() {
+    console.log('formulario posteado');
   }
 }

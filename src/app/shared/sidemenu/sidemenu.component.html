@@ -1,8 +1,12 @@
-<h2 class="text-center">Templates</h2>
+<h2>Template</h2>
 <hr>
+
 <ul class="list-group">
 
-    <li *ngFor="let item of templateMenu" class="list-group-item" [routerLink]="[ item.ruta ]" routerLinkActive="active">
+    <li *ngFor="let item of templateMenu"
+        class="list-group-item"
+        [routerLink]="[ item.ruta ]"
+        routerLinkActive="active">
         {{ item.texto }}
     </li>
 
@@ -13,7 +17,10 @@
 
 <ul class="list-group">
 
-    <li *ngFor="let item of reactiveMenu" class="list-group-item" [routerLink]="[ item.ruta ]" routerLinkActive="active">
+    <li *ngFor="let item of reactiveMenu"
+        class="list-group-item"
+        [routerLink]="[ item.ruta ]"
+        routerLinkActive="active">
         {{ item.texto }}
     </li>
 

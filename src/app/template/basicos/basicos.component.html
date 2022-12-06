@@ -4,68 +4,112 @@
 <div class="row">
     <div class="col">
 
-        <form action="" (ngSubmit)="guardar()" #miFormulario="ngForm" autocomplete="off">
-
+        <form (ngSubmit)="guardar()"
+              #miFormulario="ngForm"
+              autocomplete="off">
+            
+            <!-- Campo de producto -->
             <div class="mb-3 row">
-                <label for="producto" class="col-sm-3 col-form-label">Producto</label>
+
+
+                <label class="col-sm-3 col-form-label">Producto</label>
+
+
                 <div class="col-sm-9">
-                    <input type="text" [(ngModel)]="inicializarFormulario.producto" name="producto" class="form-control" placeholder="Nombre del producto" required minlength="5">
-                    <!-- validación de error -->
-                    <span *ngIf="VerErrorProducto()" class="form-text text-danger">Debe tener mínimo 5 letras</span>
+                    
+                    <input type="text"
+                           class="form-control"
+                           [ngModel]="initForm.producto"
+                           name="producto"
+                           placeholder="Nombre del producto"
+                           required
+                           minlength="3">
+
+                    <span class="form-text text-danger"
+                        *ngIf="nombreValido()">
+                        Debe de ser de 3 letras
+                    </span>
                 </div>
             </div>
 
-            <div class="mb-3 row">
-                <label for="precio" class="col-sm-3 col-form-label">Precio</label>
-                <div class="col-sm-9">
-                    <input type="number" class="form-control" [(ngModel)]="inicializarFormulario.precio" name="precio" placeholder="Precio del producto" step="2" min="0">
-                    <span *ngIf="VerErrorPrecio()" class="form-text text-danger">El precio debe ser mayor o igual a 0</span>
 
-                    <!-- step,min,max,required son funcionalidades curiosas de los inputs-->
+
+
+
+
+
+            <!-- Campo de producto -->
+            <div class="mb-3 row">
+                <label class="col-sm-3 col-form-label">Precio</label>
+                <div class="col-sm-9">
+                    <input type="number"
+                           class="form-control"
+                           [ngModel]="initForm.precio"
+                           name="precio"
+                           placeholder="Precio del producto"
+                           required
+                           min="0">
+                    <span class="form-text text-danger"
+                           *ngIf="precioValido()">
+                        El precio debe de ser 0 o mayor
+                    </span>
                 </div>
             </div>
 
+            <!-- Campo de existencias -->
             <div class="mb-3 row">
-                <label for="existencias" class="col-sm-3 col-form-label">Existencias</label>
+                <label class="col-sm-3 col-form-label">Existencias</label>
                 <div class="col-sm-9">
-                    <input type="number" class="form-control" [(ngModel)]="inicializarFormulario.existencias" name="existencias" placeholder="Existencias del producto" required max="5" custonMin [minimo]="0">
+                    <input type="number"
+                           class="form-control"
+                           [ngModel]="initForm.existencias"
+                           name="existencias"
+                           customMin
+                           [minimo]="0"
+                           placeholder="Existencias del producto"
+                           required>
                 </div>
             </div>
+
 
             <div class="row">
-                <div class="col ">
-                    <button type="submit" class="btn btn-primary float-end" [disabled]="miFormulario.invalid">
+                <div class="col">
+                    <button type="submit"
+                            [disabled]="miFormulario.invalid"
+                            class="btn btn-primary float-end">
                         Guardar
                     </button>
                 </div>
             </div>
+
+
 
         </form>
 
     </div>
 </div>
 
-<!-- Visualizar datos -->
+
+
 
 <div class="row">
     <div class="col">
 
         <span>Valid</span>
-        <pre>{{miFormulario.valid}}</pre>
+        <pre>{{ miFormulario.valid }}</pre>
 
         <span>Pristine</span>
-        <pre>{{miFormulario.pristine}}</pre>
+        <pre>{{ miFormulario.pristine }}</pre>
 
         <span>Touched</span>
-        <pre>{{miFormulario.touched}}</pre>
+        <pre>{{ miFormulario.touched }}</pre>
 
-        <!-- Visualizar datos formateados como json para que no se vea [object object] con el pipe Json -->
         <span>Value</span>
-        <pre>{{miFormulario.value | json}}</pre>
+        <pre>{{ miFormulario.value | json }}</pre>
 
         <span>CustomDirective</span>
-        <pre>{{miFormulario.controls.existencias?.errors | json}}</pre>
-
+        <pre>{{ miFormulario.controls.existencias?.errors | json }}</pre>
 
     </div>
 </div>
+
